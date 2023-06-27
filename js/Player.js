@@ -10,7 +10,7 @@ class Player {
 
 		this.x = canvasW * 0.09
 
-		this.y0 = canvasH * 0.7
+		this.y0 = canvasH * 0.61
 		this.y = this.y0
 
 		this.vy = 0
@@ -22,8 +22,8 @@ class Player {
 		this.img.frameCount = 5
 		this.frameIndex = 0
 
-		this.width = 146
-		this.height = 150
+		this.width = 200
+		this.height = 220
 
 		this.bullets = []
 
@@ -37,6 +37,7 @@ class Player {
 			RIGHT : false,
 			JUMP : false,
 			LEFT : false,
+			SHOOT : false,
 		}
 
 		this.setControls()
@@ -50,13 +51,17 @@ class Player {
 					break
 				case this.keys.RIGHT:
 					this.pressedControl.RIGHT = true
+					
 					break
 				case this.keys.SHOOT:
+					this.pressedControl.SHOOT = true
 					this.shoot()
 					this.bulletAudio.play()
+					
 					break
 				case this.keys.LEFT:
 					this.pressedControl.LEFT = true
+					
 					break
 			}
 		})
@@ -64,12 +69,18 @@ class Player {
 			switch (event.code) {
 				case this.keys.RIGHT:
 					this.pressedControl.RIGHT = false
+					
 					break
 				case this.keys.JUMP: 
 					this.pressedControl.JUMP = false
 					break
 				case this.keys.LEFT:
 					this.pressedControl.LEFT = false
+					
+					break
+				case this.keys.SHOOT:
+					this.pressedControl.SHOOT = false
+					
 					break
 			}
 		})
@@ -103,6 +114,22 @@ class Player {
 	}
 
 	draw(frameCounter) {
+
+		if (this.pressedControl.SHOOT){
+			this.img.src = 'assets/characters/Destroyer/Shot_2.png'
+			this.img.frameCount = 8
+		}else if(this.pressedControl.RIGHT){
+			this.img.src = 'assets/characters/Destroyer/Walk.png'
+			this.img.frameCount = 8
+		}else if(this.pressedControl.LEFT){
+			this.img.src = 'assets/characters/Destroyer/Walkleft.png'
+			this.img.frameCount = 8
+		}else{
+			this.img.src = 'assets/characters/Destroyer/Idle.png'
+			this.img.frameCount = 5
+		}
+
+
 		// Pintamos un cada frame del sprite en función del frameIndex
 		this.ctx.drawImage(
 			this.img,
@@ -149,7 +176,9 @@ class Player {
 				this.y0,
 				this.canvasW,
 				this.canvasH
+				
 			)
+		
 		)
 	}
 }

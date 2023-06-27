@@ -10,7 +10,7 @@ class Player1{
 
         this.x = canvasW * 0.8
         
-        this.y0 = canvasH * 0.7
+        this.y0 = canvasH * 0.61
         this.y = this.y0
         
         this.vy = 0
@@ -22,8 +22,8 @@ class Player1{
         this.img.frameCount = 6
         this.frameIndex = 0
 
-        this.width = 146
-        this.height = 150 
+        this.width = 200
+        this.height = 220 
 
         this.bullets = []
 
@@ -37,6 +37,7 @@ class Player1{
             RIGHT1 : false,
             JUMP1 : false, 
             LEFT1 : false,
+			SHOOT1: false,
         }
 
         this.setControls()
@@ -46,16 +47,20 @@ class Player1{
 			switch (event.code) {
 				case this.keys1.JUMP1:
 					this.pressedControl.JUMP1 = true
+			
 					break
 				case this.keys1.RIGHT1:
 					this.pressedControl.RIGHT1 = true
+					
 					break
 				case this.keys1.SHOOT1:
+					this.pressedControl.SHOOT1 = true
 					this.shoot()
 					this.bulletAudio.play()
 					break
 				case this.keys1.LEFT1:
 					this.pressedControl.LEFT1 = true
+			
 					break
 			}
 		})
@@ -63,12 +68,21 @@ class Player1{
 			switch (event.code) {
 				case this.keys1.RIGHT1:
 					this.pressedControl.RIGHT1 = false
+					
 					break
 				case this.keys1.JUMP1: 
 					this.pressedControl.JUMP1 = false
+					
 					break
 				case this.keys1.LEFT1:
 					this.pressedControl.LEFT1 = false
+					
+					break
+				case this.keys1.SHOOT1:
+					this.pressedControl.SHOOT1 = false
+					this.shoot()
+					this.bulletAudio.play()
+					
 					break
 			}
 		})
@@ -99,6 +113,21 @@ class Player1{
 		}
 	}
     draw(frameCounter) {
+
+		if (this.pressedControl.SHOOT1){
+			this.img.src = 'assets/characters/Infantryman/Shot_2left.png'
+			this.img.frameCount = 5
+		}else if(this.pressedControl.RIGHT1){
+			this.img.src = 'assets/characters/Infantryman/Walkright.png'
+			this.img.frameCount = 6
+
+		}else if(this.pressedControl.LEFT1){
+			this.img.src = 'assets/characters/Infantryman/Walkleft.png'
+
+		}else{
+			this.img.src = 'assets/characters/Infantryman/Idle.png'
+			this.img.frameCount = 6
+		}
 		// Pintamos un cada frame del sprite en función del frameIndex
 		this.ctx.drawImage(
 			this.img,

@@ -138,11 +138,6 @@ const Game = {
 	clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
 	},
-	adjustPlayersPosition() {
-		// Ajustar posición de los jugadores para que se miren el uno al otro
-		this.player2.x = this.player.x + this.player.width + 50;
-		this.player.y = this.player2.y = Math.min(this.player.y, this.player2.y);
-	},
 }
 
 export default Game
