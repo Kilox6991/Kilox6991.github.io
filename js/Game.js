@@ -46,7 +46,7 @@ const Game = {
 	reset: function () {
 		this.player = new Player(this.ctx, this.canvasW, this.canvasH, this.keys)
 		this.player1 = new Player1(this.ctx, this.canvasW, this.canvasH, this.keys1)
-		
+
 		this.background = new Background(this.ctx, this.canvasW, this.canvasH)
 		this.Floor = new Floor(this.ctx, this.canvasW, this.canvasH)
 
@@ -80,9 +80,10 @@ const Game = {
 
 			this.drawAll()
 			this.moveAll()
+			this.collisionPlayer()
 
 
-			if (this.isCollision()) this.gameover()
+			// if (this.isCollision()) this.gameover()
 
 		}, 1000 / this.fps)
 	},
@@ -99,14 +100,14 @@ const Game = {
 		this.background.move(this.worldVelocity)
 		this.player.move()
 		this.player1.move()
-		this.obstacles.forEach((obstacle) => obstacle.move(this.worldVelocity))
+
 	},
 	stop: function () {
 		this.reset()
 		clearInterval(this.intervalId)
 	},
 
-	
+
 	gameover() {
 		clearInterval(this.intervalId)
 
@@ -119,16 +120,25 @@ const Game = {
 		}
 	},
 
-	isCollision() {
-		return this.obstacles.some(
-			(obstacle) =>
-				obstacle.x < this.player.x + this.player.width - 20 &&
-				obstacle.x + obstacle.width > this.player.x &&
-				obstacle.y + obstacle.height > this.player.y &&
-				obstacle.y < this.player.y + this.player.height - 20
-		)
+	// isCollision() {
+	// 	return this.obstacles.some(
+	// 		(obstacle) =>
+	// 			obstacle.x < this.player.x + this.player.width - 20 &&
+	// 			obstacle.x + obstacle.width > this.player.x &&
+	// 			obstacle.y + obstacle.height > this.player.y &&
+	// 			obstacle.y < this.player.y + this.player.height - 20
+	// 	)
+	// },
+	collisionPlayer() {
+		if (this.player.x - 90 + this.player.width >= this.player1.x + 70) {
+			console.log("Hola")
+			this.player.flipPlayer(true)
+			this.player1.flipPlayer(true)
+		} else {
+			this.player.flipPlayer(false)
+			this.player1.flipPlayer(false)
+		}
 	},
-
 	clearObstacles() {
 		this.obstacles = this.obstacles.filter(
 			(obstacle) => obstacle.x + obstacle.width > 0
