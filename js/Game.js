@@ -27,6 +27,8 @@ const Game = {
 		JUMP1: 'ArrowUp',
 		SHOOT1: 'ArrowDown',
 	},
+	hit: false,
+	hit1: false,
 
 	init: function () {
 		const canvas = document.createElement('canvas')
@@ -69,7 +71,6 @@ const Game = {
 	// Arranca el loop de animación
 	start: function () {
 		this.reset()
-
 		this.intervalId = setInterval(() => {
 			// 60(this.fps) veces por segundo borro y pinto el canvas
 			this.clearCanvas()
@@ -78,10 +79,13 @@ const Game = {
 			this.score += 0.01
 			this.worldVelocity -= 0
 			this.bso.playbackRate += 0.0001
+			this.isCollision()
 
 			this.drawAll()
 			this.moveAll()
 			this.collisionPlayer()
+			// this.clearBullet()
+			
 
 
 			// if (this.isCollision()) this.gameover()
@@ -121,18 +125,32 @@ const Game = {
 		}
 	},
 
-	// isCollision() {
-	// 	return this.obstacles.some(
-	// 		(obstacle) =>
-	// 			obstacle.x < this.player.x + this.player.width - 20 &&
-	// 			obstacle.x + obstacle.width > this.player.x &&
-	// 			obstacle.y + obstacle.height > this.player.y &&
-	// 			obstacle.y < this.player.y + this.player.height - 20
-	// 	)
-	// },
+	isCollision() {
+
+		for (let i = 0; i < this.player1.bullets.length; i++) {
+			if (this.player.x + this.player.width-100 >= this.player1.bullets[i].x &&
+				this.player1.bullets[i].x >= this.player.x-100  &&
+				this.player.y +60 <= this.player1.bullets[i].y &&
+				this.player.y +250>= this.player1.bullets[i].y) {
+				console.log("me ha dao");
+				this.hit = true
+				this.player1.bullets.splice(0,1)
+				
+			}
+		}
+		for (let i = 0; i < this.player.bullets.length; i++) {
+			if (this.player1.x + this.player1.width+50 >= this.player.bullets[i].x &&
+				this.player.bullets[i].x >= this.player1.x+60  &&
+				this.player1.y +65 <= this.player.bullets[i].y &&
+				this.player1.y +230>= this.player.bullets[i].y) {
+				console.log("me ha dao");
+				this.hit1 = true
+				this.player.bullets.splice(0,1)
+			}
+		}
+	},
 	collisionPlayer() {
 		if (this.player.x - 90 + this.player.width >= this.player1.x + 70) {
-			console.log("Hola")
 			this.player.flipPlayer(true)
 			this.player1.flipPlayer(true)
 		} else {
@@ -140,11 +158,7 @@ const Game = {
 			this.player1.flipPlayer(false)
 		}
 	},
-	clearObstacles() {
-		this.obstacles = this.obstacles.filter(
-			(obstacle) => obstacle.x + obstacle.width > 0
-		)
-	},
+	
 
 	clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)

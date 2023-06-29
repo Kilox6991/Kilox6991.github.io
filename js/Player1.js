@@ -28,6 +28,7 @@ class Player1 {
 		this.height = 220
 
 		this.bullets = []
+		
 
 		this.jumpAudio = new Audio('../assets/sounds/jump.wav')
 		this.jumpAudio.volume = 1
@@ -99,7 +100,7 @@ class Player1 {
 		if (this.y + this.vy < -90) {
 			this.vy = 0
 		}
-		this.gravity = 3.5
+		this.gravity = 8
 		this.vy += this.gravity
 		this.y += this.vy
 		this.x += this.vx
@@ -117,7 +118,7 @@ class Player1 {
 			this.vx = 0
 		}
 		if (this.pressedControl.JUMP1) {
-			this.vy = -10
+			this.vy = -15
 		} else {
 			this.vy = 0
 		}
@@ -185,6 +186,7 @@ class Player1 {
 		this.bullets = this.bullets.filter(
 			(bullet) => bullet.x - bullet.radius < this.canvasW
 		)
+		// console.log(this.bullets[0].x)
 		this.animateSprite(frameCounter)
 	}
 	flipPlayer(isRight) {
@@ -214,7 +216,9 @@ class Player1 {
 				this.canvasH,
 				this.isRight,
 			)
+			
 		)
 	}
+
 }
 export default Player1
