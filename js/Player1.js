@@ -1,4 +1,4 @@
-import Bullet from "./Bullet.js"
+import Bullet1 from "./Bullet1.js"
 
 class Player1 {
 	constructor(ctx, canvasW, canvasH, keys1) {
@@ -58,8 +58,7 @@ class Player1 {
 					break
 				case this.keys1.SHOOT1:
 					this.pressedControl.SHOOT1 = true
-					this.shoot()
-					this.bulletAudio.play()
+					
 					break
 				case this.keys1.LEFT1:
 					this.pressedControl.LEFT1 = true
@@ -204,7 +203,7 @@ class Player1 {
 
 	shoot() {
 		this.bullets.push(
-			new Bullet(
+			new Bullet1(
 				this.ctx,
 				this.width,
 				this.height,
@@ -212,7 +211,8 @@ class Player1 {
 				this.y,
 				this.y0,
 				this.canvasW,
-				this.canvasH
+				this.canvasH,
+				this.isRight,
 			)
 		)
 	}

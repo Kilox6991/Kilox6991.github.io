@@ -6,6 +6,7 @@ import Floor from './Floor.js'
 
 
 
+
 const Game = {
 	fps: 60,
 	ctx: undefined,

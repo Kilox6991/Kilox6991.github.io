@@ -18,7 +18,7 @@ class Player {
 		this.vx = 0
 
 		this.img = new Image()
-		this.img.id = "imagen"
+
 		this.img.src = 'assets/characters/Destroyer/Idle.png'
 
 		this.img.frameCount = 5
@@ -58,8 +58,7 @@ class Player {
 					break
 				case this.keys.SHOOT:
 					this.pressedControl.SHOOT = true
-					this.shoot()
-					this.bulletAudio.play()
+					
 
 					break
 				case this.keys.LEFT:
@@ -83,6 +82,8 @@ class Player {
 					break
 				case this.keys.SHOOT:
 					this.pressedControl.SHOOT = false
+					this.shoot()
+					this.bulletAudio.play()
 
 					break
 			}
@@ -210,12 +211,11 @@ class Player {
 				this.y,
 				this.y0,
 				this.canvasW,
-				this.canvasH
-
+				this.canvasH,
+				this.isRight,
 			)
-
 		)
 	}
-}
+	}
 
 export default Player

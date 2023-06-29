@@ -1,4 +1,4 @@
-class Bullet {
+class Bullet1 {
 	constructor(
 		ctx,
 		playerW,
@@ -21,14 +21,13 @@ class Bullet {
 
 		this.floor = this.playerY0 + this.playerH - this.radius
 
-		this.x = playerX + playerW - 50
-		this.y = playerY + playerH / 2.3
+		this.x = playerX
+		this.y = playerY + playerH / 2.2
 		this.vy = 0
-		this.vx = 10
-	
+		this.vx = -10
 
 		this.img = new Image()
-		this.img.src = 'assets/characters/Laser Sprites/56.1.png'
+		this.img.src = 'assets/characters/Laser Sprites/60.1.png'
 
 		this.width = 60;
 		this.height = 40;
@@ -40,7 +39,7 @@ class Bullet {
 		if(this.isRight){
 			this.ctx.save()
 			this.ctx.scale(-1, 1)
-			this.ctx.drawImage(this.img, -this.x+100, this.y, this.width, this.height)
+			this.ctx.drawImage(this.img, -this.x-200 , this.y, this.width, this.height)
 			this.ctx.restore()
 		}else {
 			this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
@@ -66,4 +65,4 @@ class Bullet {
 	}
 }
 
-export default Bullet
+export default Bullet1
