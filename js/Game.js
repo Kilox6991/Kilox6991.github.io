@@ -31,6 +31,19 @@ const Game = {
 	hit1: false,
 
 	init: function () {
+		const divCanvas = document.createElement('div')
+		const divHeal = document.createElement('div')
+		divHeal.id = 'divHeal'
+		const divHealPlayer = document.createElement('div')
+		divHealPlayer.id = 'divHealPlayer'
+		const divLifePlayer = document.createElement('div')
+		divLifePlayer.id = 'divLifePlayer'
+		const divTemporizador = document.createElement ('div')
+		divTemporizador.id = 'divTemporizador'
+		const divHealPlayer1 = document.createElement('div')
+		divHealPlayer1.id = 'divHealPlayer1'
+		const divLifePlayer1 = document.createElement('div')
+		divLifePlayer1.id = 'divLifePlayer1'
 		const canvas = document.createElement('canvas')
 
 		this.ctx = canvas.getContext('2d')
@@ -40,7 +53,18 @@ const Game = {
 
 		ScoreBoard.init(this.ctx)
 
-		document.body.append(canvas)
+		document.body.appendChild(divCanvas)
+		divCanvas.appendChild(divHeal)
+
+		divHeal.appendChild(divHealPlayer)
+		divHealPlayer.appendChild(divLifePlayer)
+
+		divHeal.appendChild(divTemporizador)
+
+		divHeal.appendChild(divHealPlayer1)
+		divHealPlayer1.appendChild(divLifePlayer1)
+
+		divCanvas.appendChild(canvas)
 
 		this.start()
 	},
@@ -66,6 +90,9 @@ const Game = {
 
 		this.gameoverAudio = new Audio('../assets/sounds/gameover.mp3')
 		this.gameoverAudio.volume = 1
+
+		
+		const lifePlayer1ElDOM = document.querySelector('#divHealPlayer1 #divLifePlayer1')
 	},
 
 	// Arranca el loop de animación
@@ -84,15 +111,15 @@ const Game = {
 			this.drawAll()
 			this.moveAll()
 			this.collisionPlayer()
-			// this.clearBullet()
+			
+			
 			
 
 
-			// if (this.isCollision()) this.gameover()
+			// this.gameOver()
 
 		}, 1000 / this.fps)
 	},
-
 	drawAll() {
 		this.background.draw()
 		this.player.draw(this.frameCounter)
@@ -111,20 +138,6 @@ const Game = {
 		this.reset()
 		clearInterval(this.intervalId)
 	},
-
-
-	gameover() {
-		clearInterval(this.intervalId)
-
-		this.bso.pause()
-
-		this.gameoverAudio.play()
-
-		if (confirm('Quieres jugar de nuevo')) {
-			this.start()
-		}
-	},
-
 	isCollision() {
 
 		for (let i = 0; i < this.player1.bullets.length; i++) {
@@ -132,10 +145,12 @@ const Game = {
 				this.player1.bullets[i].x >= this.player.x-100  &&
 				this.player.y +60 <= this.player1.bullets[i].y &&
 				this.player.y +250>= this.player1.bullets[i].y) {
-				console.log("me ha dao");
 				this.hit = true
+				this.player.life = this.player.life-10
 				this.player1.bullets.splice(0,1)
-				
+
+				let lifePlayerElDOM = document.querySelector('#divLifePlayer');
+				lifePlayerElDOM.style.width = `${this.player.life}%`;
 			}
 		}
 		for (let i = 0; i < this.player.bullets.length; i++) {
@@ -145,7 +160,18 @@ const Game = {
 				this.player1.y +230>= this.player.bullets[i].y) {
 				console.log("me ha dao");
 				this.hit1 = true
+				this.player1.life1 = this.player1.life1-10
 				this.player.bullets.splice(0,1)
+				console.log(this.player1.life1)
+
+				let lifePlayer1ElDOM = document.querySelector('#divLifePlayer1');
+				lifePlayer1ElDOM.style.width = `${this.player1.life1}%`;
+
+				if(this.player1.life1 === 0){
+					console.log("GAMEOVER")
+					
+					
+				}
 			}
 		}
 	},
@@ -158,11 +184,17 @@ const Game = {
 			this.player1.flipPlayer(false)
 		}
 	},
-	
-
 	clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
 	},
+	// gameOver(){
+	// 	// clearInterval(this.intervalId)
+	// 	if(this.player.life === 0){
+	// 		this.start()
+	// 	}else if(this.player1.life1 === 0){
+	// 		this.start()
+	// 	}
+	// }
 }
 
 export default Game

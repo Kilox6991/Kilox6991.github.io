@@ -44,6 +44,8 @@ class Player1 {
 		}
 		this.isRight = false
 
+		this.life1 = 100
+
 		this.setControls()
 	}
 	setControls() {

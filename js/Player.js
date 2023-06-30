@@ -41,7 +41,9 @@ class Player {
 			LEFT: false,
 			SHOOT: false,
 		}
-		this.isRight = false
+		this.isRight = false,
+
+		this.life = 100,
 
 		this.setControls()
 	}
