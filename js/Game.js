@@ -1,6 +1,5 @@
 import Background from './Background.js'
 import Player from './Player.js'
-import ScoreBoard from './ScoreBoard.js'
 import Player1 from './Player1.js'
 import Floor from './Floor.js'
 
@@ -12,7 +11,6 @@ const Game = {
 	ctx: undefined,
 	canvasW: innerWidth,
 	canvasH: innerHeight,
-	scoreBoard: undefined,
 	worldVelocity: 0,
 	players: [], //Array para guardar a los jugadores y posicionarlos
 	keys: {
@@ -34,11 +32,12 @@ const Game = {
 		const divCanvas = document.createElement('div')
 		const divHeal = document.createElement('div')
 		divHeal.id = 'divHeal'
+		divHeal.classList.add('hidden');
 		const divHealPlayer = document.createElement('div')
 		divHealPlayer.id = 'divHealPlayer'
 		const divLifePlayer = document.createElement('div')
 		divLifePlayer.id = 'divLifePlayer'
-		const divTemporizador = document.createElement ('div')
+		const divTemporizador = document.createElement('div')
 		divTemporizador.id = 'divTemporizador'
 		const divHealPlayer1 = document.createElement('div')
 		divHealPlayer1.id = 'divHealPlayer1'
@@ -50,8 +49,6 @@ const Game = {
 
 		canvas.width = this.canvasW
 		canvas.height = this.canvasH
-
-		ScoreBoard.init(this.ctx)
 
 		document.body.appendChild(divCanvas)
 		divCanvas.appendChild(divHeal)
@@ -77,10 +74,6 @@ const Game = {
 		this.background = new Background(this.ctx, this.canvasW, this.canvasH)
 		this.Floor = new Floor(this.ctx, this.canvasW, this.canvasH)
 
-		this.scoreBoard = ScoreBoard
-
-		this.score = 0
-
 		this.frameCounter = 0
 
 		this.bso = new Audio()
@@ -91,8 +84,14 @@ const Game = {
 		this.gameoverAudio = new Audio('../assets/sounds/gameover.mp3')
 		this.gameoverAudio.volume = 1
 
-		
-		const lifePlayer1ElDOM = document.querySelector('#divHealPlayer1 #divLifePlayer1')
+		let lifePlayerElDOM = document.querySelector('#divLifePlayer');
+		lifePlayerElDOM.style.width = '100%';
+		this.player.life = 100;
+
+		let lifePlayer1ElDOM = document.querySelector('#divLifePlayer1');
+		lifePlayer1ElDOM.style.width = '100%';
+		this.player1.life1 = 100;
+
 	},
 
 	// Arranca el loop de animación
@@ -103,7 +102,6 @@ const Game = {
 			this.clearCanvas()
 
 			this.frameCounter++
-			this.score += 0.01
 			this.worldVelocity -= 0
 			this.bso.playbackRate += 0.0001
 			this.isCollision()
@@ -111,12 +109,11 @@ const Game = {
 			this.drawAll()
 			this.moveAll()
 			this.collisionPlayer()
-			
-			
-			
 
 
-			// this.gameOver()
+
+
+
 
 		}, 1000 / this.fps)
 	},
@@ -125,7 +122,7 @@ const Game = {
 		this.player.draw(this.frameCounter)
 		this.player1.draw(this.frameCounter)
 		this.Floor.draw()
-		this.scoreBoard.update(this.score)
+		
 	},
 
 	moveAll() {
@@ -141,36 +138,37 @@ const Game = {
 	isCollision() {
 
 		for (let i = 0; i < this.player1.bullets.length; i++) {
-			if (this.player.x + this.player.width-100 >= this.player1.bullets[i].x &&
-				this.player1.bullets[i].x >= this.player.x-100  &&
-				this.player.y +60 <= this.player1.bullets[i].y &&
-				this.player.y +250>= this.player1.bullets[i].y) {
+			if (this.player.x + this.player.width - 100 >= this.player1.bullets[i].x &&
+				this.player1.bullets[i].x >= this.player.x - 100 &&
+				this.player.y + 60 <= this.player1.bullets[i].y &&
+				this.player.y + 250 >= this.player1.bullets[i].y) {
 				this.hit = true
-				this.player.life = this.player.life-10
-				this.player1.bullets.splice(0,1)
+				this.player.life = this.player.life - 10
+				this.player1.bullets.splice(0, 1)
 
 				let lifePlayerElDOM = document.querySelector('#divLifePlayer');
 				lifePlayerElDOM.style.width = `${this.player.life}%`;
+				if (this.player.life === 0) {
+					this.gameOver();
+				}
 			}
 		}
 		for (let i = 0; i < this.player.bullets.length; i++) {
-			if (this.player1.x + this.player1.width+50 >= this.player.bullets[i].x &&
-				this.player.bullets[i].x >= this.player1.x+60  &&
-				this.player1.y +65 <= this.player.bullets[i].y &&
-				this.player1.y +230>= this.player.bullets[i].y) {
+			if (this.player1.x + this.player1.width + 50 >= this.player.bullets[i].x &&
+				this.player.bullets[i].x >= this.player1.x + 60 &&
+				this.player1.y + 65 <= this.player.bullets[i].y &&
+				this.player1.y + 230 >= this.player.bullets[i].y) {
 				console.log("me ha dao");
 				this.hit1 = true
-				this.player1.life1 = this.player1.life1-10
-				this.player.bullets.splice(0,1)
+				this.player1.life1 = this.player1.life1 - 10
+				this.player.bullets.splice(0, 1)
 				console.log(this.player1.life1)
 
 				let lifePlayer1ElDOM = document.querySelector('#divLifePlayer1');
 				lifePlayer1ElDOM.style.width = `${this.player1.life1}%`;
 
-				if(this.player1.life1 === 0){
-					console.log("GAMEOVER")
-					
-					
+				if (this.player1.life1 === 0) {
+					this.gameOver();
 				}
 			}
 		}
@@ -187,14 +185,54 @@ const Game = {
 	clearCanvas() {
 		this.ctx.clearRect(0, 0, this.canvasW, this.canvasH)
 	},
-	// gameOver(){
-	// 	// clearInterval(this.intervalId)
-	// 	if(this.player.life === 0){
-	// 		this.start()
-	// 	}else if(this.player1.life1 === 0){
-	// 		this.start()
-	// 	}
-	// }
+	gameOver() {
+		clearInterval(this.intervalId);
+		this.hideGame();
+
+		const gameOverScreen = document.createElement('div');
+		gameOverScreen.id = 'gameOverScreen';
+		gameOverScreen.classList.add('hidden');
+
+		const winnerMessage = document.createElement('p');
+		winnerMessage.id = 'winnerMessage';
+
+		const restartButton = document.createElement('button');
+		restartButton.id = 'restartButton';
+		restartButton.textContent = 'Restart';
+
+		gameOverScreen.appendChild(winnerMessage);
+		gameOverScreen.appendChild(restartButton);
+		document.body.appendChild(gameOverScreen);
+
+		restartButton.addEventListener('click', () => {
+			location.reload();
+		});
+		if (this.player.life === 0) {
+			winnerMessage.textContent = 'Player 2 wins!';
+		} else if (this.player1.life1 === 0) {
+			winnerMessage.textContent = 'Player 1 wins!';
+		} else {
+			winnerMessage.textContent = 'It\'s a draw!';
+		}
+
+		gameOverScreen.classList.remove('hidden');
+
+	},
+	hideGame() {
+		const divHealPlayer = document.querySelector('#divHealPlayer');
+		divHealPlayer.style.display = 'none';
+
+		const divsToHide = document.querySelectorAll('canvas, #divHeal, #divHealPlayer, #divHealPlayer1, #divTemporizador, #divLifePlayer, #divLifePlayer1');
+		divsToHide.forEach((div) => {
+			div.style.display = 'none';
+		});
+	},
+	showGameElements() {
+		const elementsToShow = document.querySelectorAll('.hidden');
+		elementsToShow.forEach((element) => {
+			element.classList.remove('hidden');
+		});
+	},
 }
 
 export default Game

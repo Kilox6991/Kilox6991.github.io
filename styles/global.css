@@ -22,6 +22,9 @@ body {
 #btn-stop {
 	position: absolute;
 }
+.hidden{
+	display: none;
+}
 #divCanvas{
 	position: relative;
 	display: inline-block;
@@ -32,34 +35,88 @@ body {
 	margin: 20px auto;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 #divHealPlayer{
-	background-color: red;
 	margin: 0 auto;
 	width: 100%;
+	height: 53.5px;
+	border: 2px solid white;
 	display: flex;
-	justify-content: end;	
+	justify-content: end;
+	border-radius: 10px;
+	margin-left: 20px ; 
 }
 #divHealPlayer1{
-	background-color: red;
+	
+	border: 3px solid white;
 	margin: 0 auto;
 	width: 100%;
+	height: 53.5px;
+	border-radius: 10px;
+	margin-right: 20px ;
 }
 #divTemporizador{
-	background-color: aliceblue;
-	width: 50px;
-	height: 50px;
+	
+	width: 200px;
+	height: 100px;
+	border-radius: 10px;
 }
 #divLifePlayer{
 	width: 100%;
-	background-color: aqua;
+	background-color: yellow;
 	height: 50px;
+	border-radius: 10px;
 	
 }
 #divLifePlayer1{
 	width: 100%;
-	background-color: aqua;
+	background-color: rgb(13, 218, 23);
+	border-radius: 10px;
 	height: 50px;
 	
 }
+#gameOverScreen {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+  }
+#winnerMessage {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+#restartButton {
+	padding: 10px 20px;
+	background-color: #428bca;
+	color: white;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  #restartButton:hover {
+	background-color: #3071a9;
+  }
+  .start-screen{
+	border: 2px solid black;
+	height: 400px;
+	margin-bottom: 2rem;
+  }
+  .container > div {
+	margin-top: 2rem;
+  }
+  .container h2 {
+	margin-bottom: 1rem;
+  }
+  #player1-controls,
+  #player2-controls {
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	background-color: lightgray;
+	border-radius: 4px;
+	font-size: large;
+  }
 
