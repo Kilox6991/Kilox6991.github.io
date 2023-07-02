@@ -1,8 +1,21 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.hidden {
+	display: none;
+}
+
+.container {
+	text-align: center;
+}
+
+h1 {
+	margin-bottom: 2rem;
+}
+
 body {
 	padding: 0;
 	margin: 0;
@@ -12,6 +25,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-color: blue;
 }
 
 .ball {
@@ -19,17 +33,21 @@ body {
 	background-color: red;
 	border-radius: 50%;
 }
+
 #btn-stop {
 	position: absolute;
 }
-.hidden{
+
+.hidden {
 	display: none;
 }
-#divCanvas{
+
+#divCanvas {
 	position: relative;
 	display: inline-block;
 }
-#divHeal{
+
+#divHeal {
 	position: absolute;
 	width: 100vw;
 	margin: 20px auto;
@@ -37,57 +55,57 @@ body {
 	justify-content: center;
 	align-items: center;
 }
-#divHealPlayer{
+
+#divHealPlayer {
 	margin: 0 auto;
 	width: 100%;
 	height: 53.5px;
 	border: 2px solid white;
 	display: flex;
 	justify-content: end;
-	border-radius: 10px;
-	margin-left: 20px ; 
+	margin-left: 20px;
 }
-#divHealPlayer1{
-	
+
+#divHealPlayer1 {
 	border: 3px solid white;
 	margin: 0 auto;
 	width: 100%;
 	height: 53.5px;
-	border-radius: 10px;
-	margin-right: 20px ;
+	margin-right: 20px;
 }
-#divTemporizador{
-	
+
+#divTemporizador {
 	width: 200px;
 	height: 100px;
 	border-radius: 10px;
 }
-#divLifePlayer{
+
+#divLifePlayer {
 	width: 100%;
 	background-color: yellow;
 	height: 50px;
-	border-radius: 10px;
-	
 }
-#divLifePlayer1{
+
+#divLifePlayer1 {
 	width: 100%;
 	background-color: rgb(13, 218, 23);
-	border-radius: 10px;
 	height: 50px;
-	
 }
+
 #gameOverScreen {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	text-align: center;
-  }
+}
+
 #winnerMessage {
 	font-size: 24px;
 	font-weight: bold;
 	margin-bottom: 20px;
 }
+
 #restartButton {
 	padding: 10px 20px;
 	background-color: #428bca;
@@ -96,27 +114,40 @@ body {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-  }
-  #restartButton:hover {
+}
+
+#restartButton:hover {
 	background-color: #3071a9;
-  }
-  .start-screen{
+}
+
+.start-screen {
 	border: 2px solid black;
 	height: 400px;
 	margin-bottom: 2rem;
-  }
-  .container > div {
+	background-color: azure;
+	border-radius: 10px;
+}
+
+.container>div {
 	margin-top: 2rem;
-  }
-  .container h2 {
+}
+
+.container h2 {
 	margin-bottom: 1rem;
-  }
-  #player1-controls,
-  #player2-controls {
+}
+
+#player1-controls,
+#player2-controls {
 	display: inline-block;
 	padding: 0.5rem 1rem;
 	background-color: lightgray;
 	border-radius: 4px;
 	font-size: large;
-  }
+}
 
+#gameOverScreen {
+	background-color: azure;
+	border: 2px solid black;
+	border-radius: 10px;
+	padding: 20px;
+}

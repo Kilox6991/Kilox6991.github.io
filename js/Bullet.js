@@ -1,69 +1,73 @@
 class Bullet {
-	constructor(
-		ctx,
-		playerW,
-		playerH,
-		playerX,
-		playerY,
-		playerY0,
-		canvasW,
-		canvasH,
-		isRight
-	) {
-		this.ctx = ctx
+  constructor(
+    ctx,
+    playerW,
+    playerH,
+    playerX,
+    playerY,
+    playerY0,
+    canvasW,
+    canvasH,
+    isRight
+  ) {
+    this.ctx = ctx;
 
-		this.radius = 8
+    this.radius = 8;
 
-		this.canvasH = canvasH
+    this.canvasH = canvasH;
 
-		this.playerH = playerH
-		this.playerY0 = playerY0
+    this.playerH = playerH;
+    this.playerY0 = playerY0;
 
-		this.floor = this.playerY0 + this.playerH - this.radius
+    this.floor = this.playerY0 + this.playerH - this.radius;
 
-		this.x = playerX + playerW - 50
-		this.y = playerY + playerH / 2.3
-		this.vy = 0
-		this.vx = 10
-	
+    this.x = playerX + playerW - 50;
+    this.y = playerY + playerH / 2.3;
+    this.vy = 0;
+    this.vx = 10;
 
-		this.img = new Image()
-		this.img.src = 'assets/characters/Laser Sprites/56.1.png'
+    this.img = new Image();
+    this.img.src = "assets/characters/Laser Sprites/56.1.png";
 
-		this.width = 60;
-		this.height = 40;
+    this.width = 60;
+    this.height = 40;
 
-		this.isRight = isRight
-	}
+    this.isRight = isRight;
+  }
 
-	draw() {
-		if(this.isRight){
-			this.ctx.save()
-			this.ctx.scale(-1, 1)
-			this.ctx.drawImage(this.img, -this.x+100, this.y, this.width, this.height)
-			this.ctx.restore()
-		}else {
-			this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
-		}
-	}
+  draw() {
+    if (this.isRight) {
+      this.ctx.save();
+      this.ctx.scale(-1, 1);
+      this.ctx.drawImage(
+        this.img,
+        -this.x + 100,
+        this.y,
+        this.width,
+        this.height
+      );
+      this.ctx.restore();
+    } else {
+      this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+  }
 
-	move() {
-		if (this.isRight) {
-			this.x -= this.vx;
+  move() {
+    if (this.isRight) {
+      this.x -= this.vx;
+    } else {
+      this.x += this.vx;
+    }
+    this.gravity = 0;
 
-		} else {
-			this.x += this.vx;
-		}
-		this.gravity = 0
+    this.vy += this.gravity;
+    this.y += this.vy;
 
-		this.vy += this.gravity
-		this.y += this.vy
-
-		if (this.y > this.floor) {
-			this.y = this.floor
-			this.vy *= 1
-		}
-	}
+    if (this.y > this.floor) {
+      this.y = this.floor;
+      this.vy *= 1;
+    }
+  }
 }
 
-export default Bullet
+export default Bullet;
