@@ -9,7 +9,7 @@ class Floor {
     this.y = canvasH * 0.9; //Para posicionarlo segun los personajes
 
     this.img = new Image();
-    this.img.src = "/assets/captura.png";
+    this.img.src = "../assets/captura.png";
 
     this.img.frameCount = 1;
     this.frameIndex = 0;
